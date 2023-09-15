@@ -21,13 +21,26 @@ int main(int argc, char const *argv[])
     vector<double> Cordinate = {0, 0, 0};
     Cordinates.push_back(Cordinate);
     int NumberOfParitcles;
-    cin >> "Enter the number of particles: " >> NumberOfParitcles;
+    cout<<"Enter the number of particles: ";
+    cin >> NumberOfParitcles;
     for (int i = 2; i < NumberOfParitcles + 1; i++)
     {
         double Radius, AnglePhi, AngleTheta, ParticleType;
-        cin >> "Enter Radius For Particle " + i >> Radius >> "Enter AnglePhi For Particle " + i >> AnglePhi >> "Enter AngleTheta For Particle " + i >> AngleTheta >> "Enter ParticleType For Particle " + i >> ParticleType;
+        cout<<"Enter Radius, AnglePhi, AngleTheta, ParticleType  For Particle "<<i<<" ";
+        cin >> Radius>>AnglePhi>>AngleTheta>>ParticleType;
         Cordinate = FindCordinate(Radius, AnglePhi, AngleTheta);
         Cordinates.push_back(Cordinate);
     }
+    ofstream outputFile("StructuralCordinate.txt");
+    if (!outputFile.is_open()) {
+        std::cerr << "Failed to open the file!" << std::endl;
+        return 1; // Return an error code
+    }
+    outputFile << "x y z" << endl;
+    for (int i = 0; i < NumberOfParitcles; i++)
+    {
+        outputFile << Cordinates[i][0] << " " << Cordinates[i][1] << " " << Cordinates[i][2] << endl;
+    }
+    outputFile.close();
     return 0;
 }
